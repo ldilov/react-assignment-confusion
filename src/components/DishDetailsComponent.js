@@ -33,7 +33,7 @@ class DishDetails extends Component {
 
     return (
         <div className="d-flex flex-column justify-content-between align-items-start">
-          <h2>Comments</h2>
+          <h4>Comments</h4>
           { renderedComments }
         </div>
     );
