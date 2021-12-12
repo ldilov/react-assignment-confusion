@@ -16,28 +16,40 @@ class DishDetails extends Component {
     );
   }
 
+  renderDish(dish) {
+    return (
+        <Card>
+          <CardImg top src={ dish.image } alt={ dish.name }/>
+          <CardBody>
+            <CardTitle>{ dish.name }</CardTitle>
+            <CardText>{ dish.description }</CardText>
+          </CardBody>
+        </Card>
+    );
+  }
+
+  renderComments(comments) {
+    const renderedComments = comments.map(c => this.renderComment(c));
+
+    return (
+        <div className="d-flex flex-column justify-content-between align-items-start">
+          <h2>Comments</h2>
+          { renderedComments }
+        </div>
+    );
+  }
+
   render() {
     const dish = this.props.dish;
 
     if (dish != null) {
-      const comments = dish.comments.map(c => this.renderComment(c));
-
       return (
           <div className="row">
             <div className="col-12 col-md-5 m-1">
-              <Card>
-                <CardImg top src={ dish.image } alt={ dish.name }/>
-                <CardBody>
-                  <CardTitle>{ dish.name }</CardTitle>
-                  <CardText>{ dish.description }</CardText>
-                </CardBody>
-              </Card>
+              {this.renderDish(dish)}
             </div>
-            <div className="col-12 col-md-5 m-2">
-              <h2>Comments</h2>
-              <div className="d-flex flex-column justify-content-between align-items-start">
-                { comments }
-              </div>
+            <div className="col-12 col-md-5 m-1">
+              {this.renderComments(dish.comments)}
             </div>
           </div>
       );
