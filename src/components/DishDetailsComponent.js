@@ -3,15 +3,15 @@ import { Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
 
 class DishDetails extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   renderComment(comment) {
     return (
-        <div key={comment.id} className="d-flex flex-column mt-4">
-          <span>{comment.comment}</span>
-          <span>-- {comment.author}, {comment.date}</span>
+        <div key={ comment.id } className="d-flex flex-column mt-4">
+          <span>{ comment.comment }</span>
+          <span>-- { comment.author }, { new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit'
+          }).format(new Date(Date.parse(comment.date))) }</span>
         </div>
     );
   }
@@ -44,17 +44,18 @@ class DishDetails extends Component {
 
     if (dish != null) {
       return (
-          <div className="row">
-            <div className="col-12 col-md-5 m-1">
-              {this.renderDish(dish)}
-            </div>
-            <div className="col-12 col-md-5 m-1">
-              {this.renderComments(dish.comments)}
+          <div className="container">
+            <div className="row">
+              <div className="col-12 col-md-5 m-1">
+                { this.renderDish(dish) }
+              </div>
+              <div className="col-12 col-md-5 m-1">
+                { this.renderComments(dish.comments) }
+              </div>
             </div>
           </div>
       );
-    }
-    else
+    } else
       return (
           <div/>
       );
