@@ -13,10 +13,7 @@ import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
 
-import { DISHES } from '../data/mock/dishes';
-import { COMMENTS } from '../data/mock/comments';
-import { LEADERS } from '../data/mock/leaders';
-import { PROMOTIONS } from '../data/mock/promotions';
+import { actions } from 'react-redux-form';
 
 const mapStateToProps = state => {
   return {
@@ -31,6 +28,9 @@ const mapDispatchToProps = dispatch => ({
   addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
   fetchDishes: () => {
     dispatch(fetchDishes());
+  },
+  resetFeedbackForm: () => {
+    dispatch(actions.reset('feedback'));
   }
 });
 
@@ -86,9 +86,10 @@ class Main extends Component {
             <Route path="/home" component={ HomePage }/>
             <Route exact path="/menu" component={ () => <Menu dishes={ this.props.dishes }
                                                               onClick={ (dishId) => this.onDishSelect(dishId) }/> }/>
-            <Route exact path="/contactus" component={ Contact }/>} />
             <Route exact path="/aboutus" component={ () => <About leaders={ this.props.leaders }/> }/>} />
             <Route path="/menu/:dishId" component={ DishWithId }/>
+            <Route exact path="/contactus"
+                   component={ () => <Contact resetFeedbackForm={ this.props.resetFeedbackForm }/> }/>
             <Redirect to="/home"/>
           </Switch>
           <Footer/>
