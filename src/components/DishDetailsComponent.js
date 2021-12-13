@@ -48,7 +48,7 @@ function RenderDish({dish}) {
 }
 
 
-function RenderComments({comments, addComment, dishId}) {
+function RenderComments({comments, postComment, dishId}) {
   const renderedComments = comments.map(c => <RenderComment comment={ c }/>);
 
   return (
@@ -56,14 +56,14 @@ function RenderComments({comments, addComment, dishId}) {
         <h4>Comments</h4>
         { renderedComments }
         <div className="row">
-          <CommentForm dishId={ dishId } addComment={ addComment }/>
+          <CommentForm dishId={ dishId } postComment={ postComment }/>
         </div>
       </div>
   );
 }
 
 
-const DishDetails = ({dish, addComment, comments, isLoading, errMess}) => {
+const DishDetails = ({dish, postComment, comments, isLoading, errMess}) => {
   if (isLoading) {
     return (
         <div className="container">
@@ -99,7 +99,7 @@ const DishDetails = ({dish, addComment, comments, isLoading, errMess}) => {
               <RenderDish dish={ dish }/>
             </div>
             <div className="col-12 col-md-5 m-1">
-              <RenderComments comments={ comments } addComment={ addComment } dishId={ dish.id }/>
+              <RenderComments comments={ comments } postComment={ postComment } dishId={ dish.id }/>
             </div>
           </div>
         </div>
@@ -120,7 +120,7 @@ class CommentForm extends Component {
   }
 
   handleSubmit({rating, author, comment}) {
-    this.props.addComment(this.props.dishId, rating, author, comment);
+    this.props.postComment(this.props.dishId, rating, author, comment);
   }
 
   toggleModal() {

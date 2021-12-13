@@ -1,4 +1,3 @@
-
 {
   "dishes": [
     {
@@ -202,6 +201,14 @@
       "comment": "It's your birthday, we're gonna party!",
       "author": "25 Cent",
       "date": "2011-12-02T17:57:28.556094Z"
+    },
+    {
+      "dishId": 0,
+      "rating": "3",
+      "author": "estset",
+      "comment": "setestset",
+      "date": "2021-12-13T09:37:18.254Z",
+      "id": 20
     }
   ],
   "promotions": [
