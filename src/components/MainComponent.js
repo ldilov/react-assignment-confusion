@@ -4,7 +4,7 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
-
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
@@ -70,7 +70,7 @@ class Main extends Component {
           errMess={ this.props.dishes.errMess }
           comments={ this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10)) }
           commentsErrMess={ this.props.comments.errMess }
-          postComment={this.props.postComment}
+          postComment={ this.props.postComment }
       />);
     };
 
@@ -82,16 +82,19 @@ class Main extends Component {
         </div>
       </Navbar>
       <Header/>
-      <Switch>
-        <Route path="/home" component={ HomePage }/>
-        <Route exact path="/menu" component={ () => <Menu dishes={ this.props.dishes }
-                                                          onClick={ (dishId) => this.onDishSelect(dishId) }/> }/>
-        <Route exact path="/aboutus" component={ () => <About leaders={ this.props.leaders }/> }/>} />
-        <Route path="/menu/:dishId" component={ DishWithId }/>
-        <Route exact path="/contactus"
-               component={ () => <Contact resetFeedbackForm={ this.props.resetFeedbackForm }/> }/>
-        <Redirect to="/home"/>
-      </Switch>
+      <TransitionGroup>
+        <CSSTransition key={ this.props.location.key } classNames="page" timeout={ 300 }>
+          <Switch location={ this.props.location }>
+            <Route path="/home" component={ HomePage }/>
+            <Route exact path="/aboutus" component={ () => <About leaders={ this.props.leaders }/> }/>} />
+            <Route exact path="/menu" component={ () => <Menu dishes={ this.props.dishes }/> }/>
+            <Route path="/menu/:dishId" component={ DishWithId }/>
+            <Route exact path="/contactus"
+                   component={ () => <Contact resetFeedbackForm={ this.props.resetFeedbackForm }/> }/>
+            <Redirect to="/home"/>
+          </Switch>
+        </CSSTransition>
+      </TransitionGroup>
       <Footer/>
     </div>);
   }
