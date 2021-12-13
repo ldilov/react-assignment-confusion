@@ -11,12 +11,13 @@ import {
   ModalBody,
   Col,
   Label,
-  Button
+  Button, CardBody, CardText
 } from 'reactstrap';
 import { Loading } from './LoadingComponent';
 import { Link } from 'react-router-dom';
 import { Control, Errors, LocalForm } from 'react-redux-form';
 import { baseUrl } from '../data/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -25,25 +26,34 @@ const minLength = (len) => (val) => val && (val.length >= len);
 
 function RenderComment({comment}) {
   return (
-      <div key={ comment.id } className="d-flex flex-column mt-4">
-        <span>{ comment.comment }</span>
-        <span>-- { comment.author }, { new Intl.DateTimeFormat('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: '2-digit'
-        }).format(new Date(Date.parse(comment.date))) }</span>
-      </div>
+      <Fade in>
+        <div key={ comment.id } className="d-flex flex-column mt-4">
+          <span>{ comment.comment }</span>
+          <span>-- { comment.author }, { new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit'
+          }).format(new Date(Date.parse(comment.date))) }</span>
+        </div>
+      </Fade>
   );
 }
 
 function RenderDish({dish}) {
   return (
-      <Card>
-        <CardImg top src={baseUrl + dish.image} alt={dish.name} />
-        <CardImgOverlay>
-          <CardTitle>{ dish.name }</CardTitle>
-        </CardImgOverlay>
-      </Card>
+      <FadeTransform
+          in
+          transformProps={ {
+            exitTransform: 'scale(0.5) translateY(-50%)'
+          } }>
+        <Card>
+          <CardImg top src={ baseUrl + dish.image } alt={ dish.name }/>
+          <CardBody>
+            <CardTitle>{ dish.name }</CardTitle>
+            <CardText>{ dish.description }</CardText>
+          </CardBody>
+        </Card>
+      </FadeTransform>
   );
 }
 
@@ -54,7 +64,9 @@ function RenderComments({comments, postComment, dishId}) {
   return (
       <div className="d-flex flex-column justify-content-between align-items-start">
         <h4>Comments</h4>
-        { renderedComments }
+        <Stagger in>
+          { renderedComments }
+        </Stagger>
         <div className="row">
           <CommentForm dishId={ dishId } postComment={ postComment }/>
         </div>
