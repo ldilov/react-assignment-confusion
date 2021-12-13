@@ -38,13 +38,6 @@ class Main extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      dishes: DISHES,
-      comments: COMMENTS,
-      promotions: PROMOTIONS,
-      leaders: LEADERS
-    };
   }
 
   componentDidMount() {
@@ -91,10 +84,10 @@ class Main extends Component {
           <Header/>
           <Switch>
             <Route path="/home" component={ HomePage }/>
-            <Route exact path="/menu" component={ () => <Menu dishes={ this.state.dishes }
+            <Route exact path="/menu" component={ () => <Menu dishes={ this.props.dishes }
                                                               onClick={ (dishId) => this.onDishSelect(dishId) }/> }/>
             <Route exact path="/contactus" component={ Contact }/>} />
-            <Route exact path="/aboutus" component={ () => <About leaders={ this.state.leaders }/> }/>} />
+            <Route exact path="/aboutus" component={ () => <About leaders={ this.props.leaders }/> }/>} />
             <Route path="/menu/:dishId" component={ DishWithId }/>
             <Redirect to="/home"/>
           </Switch>
